@@ -7,12 +7,18 @@
 //
 
 #import "AppDelegate.h"
-#import "ViewController.h"
+#import "MainViewController.h"
+
+#import "Hotel+CoreDataClass.h"
+#import "Hotel+CoreDataProperties.h"
+
+#import "Room+CoreDataClass.h"
+#import "Room+CoreDataProperties.h"
 
 @interface AppDelegate ()
 
 @property (strong, nonatomic) UINavigationController *navController;
-@property (strong, nonatomic) ViewController *viewController;
+@property (strong, nonatomic) MainViewController *mainViewController;
 
 @end
 
@@ -21,15 +27,73 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [self bootstrapApp];
     [self setupRootViewController];
     return YES;
+}
+
+- (void)bootstrapApp {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Hotel"];
+    
+    NSError *error;
+    NSInteger count = [self.persistentContainer.viewContext
+                       countForFetchRequest:request
+                       error:&error];
+    
+    if (error) {
+        NSLog(@"%@", error.localizedDescription);
+    }
+    
+    if (count == 0) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"hotels"
+                                                         ofType:@"json"];
+        
+        NSData *jsonData = [NSData dataWithContentsOfFile:path];
+        
+        NSError *jsonError;
+        NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                                 options:NSJSONWritingPrettyPrinted | NSJSONReadingMutableContainers error:&jsonError];
+        if (jsonError) {
+            NSLog(@"%@", jsonError.localizedDescription);
+        }
+        NSDictionary *hotels = jsonDict[@"Hotels"];
+        
+        
+        for (NSDictionary *hotel in hotels) {
+            
+            Hotel *currentHotel = [NSEntityDescription insertNewObjectForEntityForName:@"Hotel"
+                                                                inManagedObjectContext:self.persistentContainer.viewContext];
+            
+            currentHotel.name = hotel[@"name"];
+            currentHotel.location = hotel[@"location"];
+            currentHotel.stars = (NSInteger)hotel[@"stars"];
+            
+            for (NSDictionary *room in hotel[@"rooms"]) {
+                Room *currentRoom = [NSEntityDescription insertNewObjectForEntityForName:@"Room"
+                                                                  inManagedObjectContext:self.persistentContainer.viewContext];
+                NSNumber *number = room[@"number"];
+                currentRoom.number = [number integerValue];
+                currentRoom.beds = (NSInteger)room[@"beds"];
+                currentRoom.rate = (NSInteger)room[@"rate"];
+                currentRoom.hotel = currentHotel;
+            }
+        }
+    
+        NSError *saveError;
+        [self.persistentContainer.viewContext save:&saveError];
+        if (saveError) {
+            NSLog(@"Error saving to core data");
+        } else {
+            NSLog(@"Successfully saved to core data");
+        }
+    }
 }
 
 
 - (void)setupRootViewController {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.viewController = [[ViewController alloc] init];
-    self.navController = [[UINavigationController alloc] initWithRootViewController:self.viewController];
+    self.mainViewController = [[MainViewController alloc] init];
+    self.navController = [[UINavigationController alloc] initWithRootViewController:self.mainViewController];
     self.window.rootViewController = self.navController;
     [self.window makeKeyAndVisible]; // ?
 }
@@ -84,7 +148,7 @@
                      * The device is out of space.
                      * The store could not be migrated to the current model version.
                      Check the error message to determine what the actual problem was.
-                    */
+                     */
                     NSLog(@"Unresolved error %@, %@", error, error.userInfo);
                     abort();
                 }
