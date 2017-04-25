@@ -16,6 +16,7 @@
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSArray *rooms;
+@property (strong, nonatomic) NSMutableArray *roomNumbers;
 
 @end
 
@@ -30,13 +31,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
+    self.roomNumbers = [[NSMutableArray alloc] init];
     self.rooms = [[self.currSelectedHotel rooms] allObjects];
-
-//    [self.rooms sortedArrayUsingSelector:@selector(compare:)];
+    for (Room *room in self.rooms) {
+        [self.roomNumbers addObject: [NSNumber numberWithUnsignedInt:room.number]];
+    }
+    self.roomNumbers = [[self.roomNumbers sortedArrayUsingSelector:@selector(compare:)] mutableCopy];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
 
 }
@@ -44,8 +47,8 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    Room *room = self.rooms[indexPath.row];
-    cell.textLabel.text = [[NSNumber numberWithUnsignedInteger:room.number] stringValue];
+    
+    cell.textLabel.text = [self.roomNumbers[indexPath.row] stringValue];
 
     return cell;
 }
