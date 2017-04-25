@@ -9,11 +9,14 @@
 /* Begin PBXBuildFile section */
 		6BCA8BAA1EAE694400727E20 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BCA8BA91EAE694400727E20 /* main.m */; };
 		6BCA8BAD1EAE694400727E20 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BCA8BAC1EAE694400727E20 /* AppDelegate.m */; };
-		6BCA8BB01EAE694400727E20 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BCA8BAF1EAE694400727E20 /* ViewController.m */; };
-		6BCA8BB61EAE694400727E20 /* HotelManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BCA8BB41EAE694400727E20 /* HotelManager.xcdatamodeld */; };
+		6BCA8BB01EAE694400727E20 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BCA8BAF1EAE694400727E20 /* MainViewController.m */; };
 		6BCA8BB81EAE694400727E20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BCA8BB71EAE694400727E20 /* Assets.xcassets */; };
 		6BCA8BBB1EAE694400727E20 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BCA8BB91EAE694400727E20 /* LaunchScreen.storyboard */; };
 		6BCA8BC41EAE6D2700727E20 /* AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BCA8BC31EAE6D2700727E20 /* AutoLayout.m */; };
+		6BCA8BE11EAE9D5A00727E20 /* hotels.json in Resources */ = {isa = PBXBuildFile; fileRef = 6BCA8BE01EAE9D5A00727E20 /* hotels.json */; };
+		6BCA8BE41EAEA49F00727E20 /* HotelsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BCA8BE31EAEA49F00727E20 /* HotelsViewController.m */; };
+		6BCA8BE71EAEAD4A00727E20 /* RoomsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BCA8BE61EAEAD4A00727E20 /* RoomsViewController.m */; };
+		6BFCCA751EAEE3BB00A6C07C /* HotelManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BFCCA731EAEE3BB00A6C07C /* HotelManager.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,14 +24,19 @@
 		6BCA8BA91EAE694400727E20 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6BCA8BAB1EAE694400727E20 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6BCA8BAC1EAE694400727E20 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		6BCA8BAE1EAE694400727E20 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		6BCA8BAF1EAE694400727E20 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		6BCA8BB51EAE694400727E20 /* HotelManager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HotelManager.xcdatamodel; sourceTree = "<group>"; };
+		6BCA8BAE1EAE694400727E20 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		6BCA8BAF1EAE694400727E20 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		6BCA8BB71EAE694400727E20 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6BCA8BBA1EAE694400727E20 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6BCA8BBC1EAE694400727E20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BCA8BC21EAE6D2700727E20 /* AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoLayout.h; sourceTree = "<group>"; };
 		6BCA8BC31EAE6D2700727E20 /* AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoLayout.m; sourceTree = "<group>"; };
+		6BCA8BE01EAE9D5A00727E20 /* hotels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hotels.json; sourceTree = "<group>"; };
+		6BCA8BE21EAEA49F00727E20 /* HotelsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelsViewController.h; sourceTree = "<group>"; };
+		6BCA8BE31EAEA49F00727E20 /* HotelsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelsViewController.m; sourceTree = "<group>"; };
+		6BCA8BE51EAEAD4A00727E20 /* RoomsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomsViewController.h; sourceTree = "<group>"; };
+		6BCA8BE61EAEAD4A00727E20 /* RoomsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomsViewController.m; sourceTree = "<group>"; };
+		6BFCCA741EAEE3BB00A6C07C /* HotelManager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HotelManager.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,14 +74,10 @@
 				6BCA8BC51EAE6D4900727E20 /* Model */,
 				6BCA8BAB1EAE694400727E20 /* AppDelegate.h */,
 				6BCA8BAC1EAE694400727E20 /* AppDelegate.m */,
-				6BCA8BAE1EAE694400727E20 /* ViewController.h */,
-				6BCA8BAF1EAE694400727E20 /* ViewController.m */,
-				6BCA8BC21EAE6D2700727E20 /* AutoLayout.h */,
-				6BCA8BC31EAE6D2700727E20 /* AutoLayout.m */,
+				6BFCCA731EAEE3BB00A6C07C /* HotelManager.xcdatamodeld */,
 				6BCA8BB71EAE694400727E20 /* Assets.xcassets */,
 				6BCA8BB91EAE694400727E20 /* LaunchScreen.storyboard */,
 				6BCA8BBC1EAE694400727E20 /* Info.plist */,
-				6BCA8BB41EAE694400727E20 /* HotelManager.xcdatamodeld */,
 				6BCA8BA81EAE694400727E20 /* Supporting Files */,
 			);
 			path = HotelManager;
@@ -90,6 +94,7 @@
 		6BCA8BC51EAE6D4900727E20 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6BCA8BE01EAE9D5A00727E20 /* hotels.json */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -97,6 +102,8 @@
 		6BCA8BC61EAE6D5600727E20 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				6BCA8BC21EAE6D2700727E20 /* AutoLayout.h */,
+				6BCA8BC31EAE6D2700727E20 /* AutoLayout.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -104,6 +111,12 @@
 		6BCA8BC71EAE6D5B00727E20 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				6BCA8BAE1EAE694400727E20 /* MainViewController.h */,
+				6BCA8BAF1EAE694400727E20 /* MainViewController.m */,
+				6BCA8BE21EAEA49F00727E20 /* HotelsViewController.h */,
+				6BCA8BE31EAEA49F00727E20 /* HotelsViewController.m */,
+				6BCA8BE51EAEAD4A00727E20 /* RoomsViewController.h */,
+				6BCA8BE61EAEAD4A00727E20 /* RoomsViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -167,6 +180,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BCA8BE11EAE9D5A00727E20 /* hotels.json in Resources */,
 				6BCA8BBB1EAE694400727E20 /* LaunchScreen.storyboard in Resources */,
 				6BCA8BB81EAE694400727E20 /* Assets.xcassets in Resources */,
 			);
@@ -179,9 +193,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6BCA8BB61EAE694400727E20 /* HotelManager.xcdatamodeld in Sources */,
-				6BCA8BB01EAE694400727E20 /* ViewController.m in Sources */,
+				6BCA8BB01EAE694400727E20 /* MainViewController.m in Sources */,
 				6BCA8BAD1EAE694400727E20 /* AppDelegate.m in Sources */,
+				6BFCCA751EAEE3BB00A6C07C /* HotelManager.xcdatamodeld in Sources */,
+				6BCA8BE41EAEA49F00727E20 /* HotelsViewController.m in Sources */,
+				6BCA8BE71EAEAD4A00727E20 /* RoomsViewController.m in Sources */,
 				6BCA8BAA1EAE694400727E20 /* main.m in Sources */,
 				6BCA8BC41EAE6D2700727E20 /* AutoLayout.m in Sources */,
 			);
@@ -336,16 +352,17 @@
 				6BCA8BC11EAE694400727E20 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		6BCA8BB41EAE694400727E20 /* HotelManager.xcdatamodeld */ = {
+		6BFCCA731EAEE3BB00A6C07C /* HotelManager.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				6BCA8BB51EAE694400727E20 /* HotelManager.xcdatamodel */,
+				6BFCCA741EAEE3BB00A6C07C /* HotelManager.xcdatamodel */,
 			);
-			currentVersion = 6BCA8BB51EAE694400727E20 /* HotelManager.xcdatamodel */;
+			currentVersion = 6BFCCA741EAEE3BB00A6C07C /* HotelManager.xcdatamodel */;
 			path = HotelManager.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

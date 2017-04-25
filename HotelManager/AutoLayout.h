@@ -34,5 +34,32 @@
 + (NSLayoutConstraint *)trailingConstraintFrom:(UIView *)view
                                         toView:(UIView *)otherView;
 
++ (NSLayoutConstraint *)topConstraintFrom:(UIView *)view
+                                       toView:(UIView *)otherView;
+
++ (NSLayoutConstraint *)bottomConstraintFrom:(UIView *)view
+                                        toView:(UIView *)otherView;
+
++ (NSLayoutConstraint *)height:(CGFloat)height
+                       forView:(UIView *)view;
+
++ (NSLayoutConstraint *)width:(CGFloat)width
+                      forView:(UIView *)view;
+
++ (NSLayoutConstraint *)centerYFrom:(UIView *)view
+                             toView:(UIView *)otherView
+                         withOffset:(CGFloat)offset;
+
++ (NSLayoutConstraint *)centerXFrom:(UIView *)view
+                             toView:(UIView *)otherView
+                         withOffset:(CGFloat)offset;
+
++ (NSLayoutConstraint *)offest:(CGFloat)offest
+                    forViewTop:(UIView *)view
+                  toViewBottom:(UIView *)otherView;
+
++ (NSLayoutConstraint *)offest:(CGFloat)offest
+                    forViewTop:(UIView *)view
+                     toViewTop:(UIView *)otherView;
 
 @end

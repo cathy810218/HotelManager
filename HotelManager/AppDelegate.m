@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "ViewController.h"
+#import "MainViewController.h"
 
 #import "Hotel+CoreDataClass.h"
 #import "Hotel+CoreDataProperties.h"
@@ -18,7 +18,7 @@
 @interface AppDelegate ()
 
 @property (strong, nonatomic) UINavigationController *navController;
-@property (strong, nonatomic) ViewController *viewController;
+@property (strong, nonatomic) MainViewController *mainViewController;
 
 @end
 
@@ -27,6 +27,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [self bootstrapApp];
     [self setupRootViewController];
     return YES;
 }
@@ -35,7 +36,6 @@
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Hotel"];
     
     NSError *error;
-    
     NSInteger count = [self.persistentContainer.viewContext
                        countForFetchRequest:request
                        error:&error];
@@ -57,7 +57,7 @@
             NSLog(@"%@", jsonError.localizedDescription);
         }
         NSDictionary *hotels = jsonDict[@"Hotels"];
-        NSDictionary *rooms = jsonDict[@"Rooms"];
+        
         
         for (NSDictionary *hotel in hotels) {
             
@@ -68,15 +68,17 @@
             currentHotel.location = hotel[@"location"];
             currentHotel.stars = (NSInteger)hotel[@"stars"];
             
-            for (NSDictionary *room in rooms) {
+            for (NSDictionary *room in hotel[@"rooms"]) {
                 Room *currentRoom = [NSEntityDescription insertNewObjectForEntityForName:@"Room"
                                                                   inManagedObjectContext:self.persistentContainer.viewContext];
-                currentRoom.number = (NSInteger)room[@"number"];
+                NSNumber *number = room[@"number"];
+                currentRoom.number = [number integerValue];
                 currentRoom.beds = (NSInteger)room[@"beds"];
                 currentRoom.rate = (NSInteger)room[@"rate"];
                 currentRoom.hotel = currentHotel;
             }
         }
+    
         NSError *saveError;
         [self.persistentContainer.viewContext save:&saveError];
         if (saveError) {
@@ -90,8 +92,8 @@
 
 - (void)setupRootViewController {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.viewController = [[ViewController alloc] init];
-    self.navController = [[UINavigationController alloc] initWithRootViewController:self.viewController];
+    self.mainViewController = [[MainViewController alloc] init];
+    self.navController = [[UINavigationController alloc] initWithRootViewController:self.mainViewController];
     self.window.rootViewController = self.navController;
     [self.window makeKeyAndVisible]; // ?
 }
