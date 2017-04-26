@@ -8,6 +8,8 @@
 
 #import "BookViewController.h"
 #import "AutoLayout.h"
+#import "AppDelegate.h"
+#import "MainViewController.h"
 
 #import "Hotel+CoreDataProperties.h"
 #import "HotelManager+CoreDataModel.h"
@@ -40,7 +42,7 @@
                                                                       style:UIBarButtonItemStyleDone
                                                                      target:self
                                                                      action:@selector(reserveButtonPressed:)];
-   [self.navigationItem setRightBarButtonItem:reserveButton];
+    [self.navigationItem setRightBarButtonItem:reserveButton];
 }
 
 - (void)viewDidLoad
@@ -52,41 +54,50 @@
 - (void)reserveButtonPressed:(UIBarButtonItem *)sender
 {
     // save
-//    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-//    
-//    Reservation *reservation = [NSEntityDescription insertNewObjectForEntityForName:@"Reservation" inManagedObjectContext:appDelegate.coreDataStack.managedObjectContext];
-//    
-//    Guest *guestForReservation = [NSEntityDescription insertNewObjectForEntityForName:@"Guest" inManagedObjectContext:appDelegate.coreDataStack.managedObjectContext];
-//    guestForReservation.lastName = self.lastNameTextfield.text;
-//    guestForReservation.firstName = self.firstNameTextfield.text;
-//    reservation.guest = guestForReservation;
-//    
-//    reservation.startDate = self.startDate;
-//    reservation.endDate = self.endDate;
-//    reservation.room = self.currSelectedRoom;
-//    MainMenuViewController *mainMenuVC = [[MainMenuViewController alloc]init];
-//    //  NSLog(@"last name %@", reservation.guest.lastName);
-//    //  NSLog(@"start date %@", reservation.startDate);
-//    //  NSLog(@"hotel %@", reservation.room.hotel.name);
-//    //  NSLog(@"room number%@", reservation.room.number);
-//    
-//    NSError *saveError;
-//    BOOL result = [appDelegate.coreDataStack.managedObjectContext save:&saveError];
-//    if (!result) {
-//        NSLog(@" %@",saveError.localizedDescription);
-//    }
-//    
-//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Success!" message:@"Your reservation has been confirmed!" preferredStyle:UIAlertControllerStyleAlert];
-//    
-//    
-//    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
-//                               {
-//                                   [self.navigationController pushViewController:mainMenuVC animated:true];
-//                               }];
-//    
-//    [alertController addAction:okAction];
-//    
-//    [self presentViewController:alertController animated:YES completion:nil];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    Reservation *reservation = [NSEntityDescription insertNewObjectForEntityForName:@"Reservation" inManagedObjectContext:appDelegate.persistentContainer.viewContext];
+    
+    Guest *guest = [NSEntityDescription insertNewObjectForEntityForName:@"Guest" inManagedObjectContext:appDelegate.persistentContainer.viewContext];
+    
+    guest.lastName = self.lastNameTextfield.text;
+    guest.firstName = self.firstNameTextfield.text;
+    guest.email = self.emailTextfield.text;
+    reservation.guest = guest;
+    
+    reservation.startDate = self.startDate;
+    reservation.endDate = self.endDate;
+    reservation.room = self.currSelectedRoom;
+    
+    
+    NSError *saveError;
+    BOOL result = [appDelegate.persistentContainer.viewContext save:&saveError];
+    if (!result) {
+        NSLog(@" %@",saveError.localizedDescription);
+    }
+    
+    if (!saveError) {
+        [self showAlertControllerWithSuccee:@"Success!" withMessage:@"Your reservation has been confirmed!"];
+    } else {
+        [self showAlertControllerWithSuccee:@"Fail..." withMessage:@"Something went wrong! We were not able to reserve your room"];
+    }
+}
+
+- (void)showAlertControllerWithSuccee:(NSString *)title withMessage:(NSString *)message
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+                                                                             message:message
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction *action)
+                               {
+                                   [self.navigationController popToRootViewControllerAnimated:YES];
+                               }];
+    
+    [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)setupTextfields
@@ -166,7 +177,7 @@
     
     [AutoLayout height:30 forView:checkInLabel];
     [AutoLayout height:30 forView:checkOutLabel];
-
+    
 }
 
 
