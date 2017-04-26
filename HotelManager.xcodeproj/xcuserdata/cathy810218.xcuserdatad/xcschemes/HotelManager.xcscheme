@@ -28,6 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "6BBE809E1EB11C2A00961022"
+               BuildableName = "AutolayoutTest.xctest"
+               BlueprintName = "AutolayoutTest"
+               ReferencedContainer = "container:HotelManager.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "6BBE80AC1EB11C3D00961022"
+               BuildableName = "HotelManagerTests.xctest"
+               BlueprintName = "HotelManagerTests"
+               ReferencedContainer = "container:HotelManager.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
