@@ -22,9 +22,6 @@
 @end
 
 @implementation HotelsViewController
-{
-    NSArray *_allHotels;
-}
 
 -(void)loadView
 {
@@ -36,12 +33,12 @@
     
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     self.tableView.delegate   = self;
     self.tableView.dataSource = self;
-    [self allHotels];
     
     // Because we don't have a stroyboard, so we set it's identifier here
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
@@ -81,12 +78,12 @@
     return [self.allHotels count];
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     RoomsViewController *roomVC = [[RoomsViewController alloc]init];
     roomVC.currSelectedHotel = self.allHotels[indexPath.row];
     
-    [self.navigationController pushViewController:roomVC animated:true];
-    
+    [self.navigationController pushViewController:roomVC animated:YES];
 }
 
 @end

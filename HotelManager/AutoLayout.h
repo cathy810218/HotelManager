@@ -55,11 +55,11 @@
                          withOffset:(CGFloat)offset;
 
 + (NSLayoutConstraint *)offest:(CGFloat)offest
-                    forViewTop:(UIView *)view
-                  toViewBottom:(UIView *)otherView;
+                forThisItemTop:(id)item
+                 toThatItemTop:(id)otherItem;
 
 + (NSLayoutConstraint *)offest:(CGFloat)offest
-                    forViewTop:(UIView *)view
-                     toViewTop:(UIView *)otherView;
+                forThisItemTop:(id)item
+              toThatItemBottom:(id)otherItem;
 
 @end

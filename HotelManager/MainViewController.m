@@ -9,8 +9,15 @@
 #import "MainViewController.h"
 #import "AutoLayout.h"
 #import "HotelsViewController.h"
+#import "DatePickerViewController.h"
+#import "ReservationViewController.h"
 
 @interface MainViewController ()
+
+@property (strong, nonatomic) UIButton *browseButton;
+@property (strong, nonatomic) UIButton *bookButton;
+@property (strong, nonatomic) UIButton *lookupButton;
+
 
 @end
 
@@ -20,7 +27,7 @@
 {
     [super loadView];
     self.view.backgroundColor = [UIColor whiteColor];
-    [self setupLayout];
+    [self setupButtons];
 }
 
 - (void)viewDidLoad
@@ -30,59 +37,84 @@
     
 }
 
-- (void)setupLayout
-{    
+- (void)setupButtons
+{
     UIButton *browseButton = [self createButtonWithTitle:@"Browse"];
     UIButton *bookButton   = [self createButtonWithTitle:@"Book"];
     UIButton *lookupButton = [self createButtonWithTitle:@"Look up"];
-    CGFloat height = (self.view.bounds.size.height - 64) / 3;
-    CGFloat width = self.view.bounds.size.width;
     
     browseButton.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.5 alpha:1];
     bookButton.backgroundColor = [UIColor redColor];
     lookupButton.backgroundColor = [UIColor grayColor];
     
-    [AutoLayout leadingConstraintFrom:browseButton toView:self.view];
-    [AutoLayout trailingConstraintFrom:browseButton toView:self.view];
-    [AutoLayout offest:64 forViewTop:browseButton toViewTop:self.view];
-    [AutoLayout height:height forView:browseButton];
- 
-    [AutoLayout height:height forView:bookButton];
-    [AutoLayout width:width forView:bookButton];
-    [AutoLayout offest:0 forViewTop:bookButton toViewBottom:browseButton];
-    
-    
-    [AutoLayout height:height forView:lookupButton];
-    [AutoLayout width:width forView:lookupButton];
-    [AutoLayout offest:0 forViewTop:lookupButton toViewBottom:bookButton];
     
     [browseButton addTarget:self
-                     action:@selector(browseButtonSelected)
+                     action:@selector(browseButtonPressed)
            forControlEvents:UIControlEventTouchUpInside];
     
     [bookButton addTarget:self
-                     action:@selector(bookButtonPressed)
-           forControlEvents:UIControlEventTouchUpInside];
+                   action:@selector(bookButtonPressed)
+         forControlEvents:UIControlEventTouchUpInside];
     
     [lookupButton addTarget:self
                      action:@selector(lookupButtonPressed)
            forControlEvents:UIControlEventTouchUpInside];
+    
+    self.browseButton = browseButton;
+    self.bookButton = bookButton;
+    self.lookupButton = lookupButton;
+    
+    [self updateButtonLayout];
+}
+
+- (void)updateViewConstraints
+{
+    [self updateButtonLayout];
+    [super updateViewConstraints];
+}
+
+- (void)updateButtonLayout
+{
+    [AutoLayout offest:0.0 forThisItemTop:self.browseButton toThatItemBottom:self.topLayoutGuide];
+    
+    [AutoLayout leadingConstraintFrom:self.browseButton toView:self.view];
+    [AutoLayout trailingConstraintFrom:self.browseButton toView:self.view];
+    
+    [AutoLayout equalHeightConstraintFromView:self.bookButton toView:self.browseButton withMultiplier:1.0];
+    [AutoLayout leadingConstraintFrom:self.bookButton toView:self.view];
+    [AutoLayout trailingConstraintFrom:self.bookButton toView:self.view];
+    [AutoLayout offest:0.0 forThisItemTop:self.bookButton toThatItemBottom:self.browseButton];
+    
+    [AutoLayout equalHeightConstraintFromView:self.lookupButton toView:self.browseButton withMultiplier:1.0];
+    [AutoLayout leadingConstraintFrom:self.lookupButton toView:self.view];
+    [AutoLayout trailingConstraintFrom:self.lookupButton toView:self.view];
+    [AutoLayout offest:0.0 forThisItemTop:self.lookupButton toThatItemBottom:self.bookButton];
+    
+    [AutoLayout bottomConstraintFrom:self.lookupButton toView:self.view];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [self.view setNeedsUpdateConstraints];
+}
+
+- (void)browseButtonPressed
+{
+    HotelsViewController *hotelVC = [[HotelsViewController alloc] init];
+    [self.navigationController pushViewController: hotelVC animated:YES];
 }
 
 - (void)bookButtonPressed
 {
-    
+    DatePickerViewController *datePickerVC = [[DatePickerViewController alloc] init];
+    [self.navigationController pushViewController: datePickerVC animated:YES];
 }
 
 - (void)lookupButtonPressed
 {
-    
-}
-
-- (void)browseButtonSelected
-{
-    HotelsViewController *hotelVC = [[HotelsViewController alloc] init];
-    [self.navigationController pushViewController: hotelVC animated:YES];
+    ReservationViewController *reservationVC = [[ReservationViewController alloc] init];
+    [self.navigationController pushViewController: reservationVC animated:YES];
 }
 
 - (UIButton *)createButtonWithTitle:(NSString *)title

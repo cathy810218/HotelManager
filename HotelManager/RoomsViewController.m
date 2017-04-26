@@ -29,7 +29,8 @@
     [self.view addSubview:self.tableView];
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
 
     self.tableView.delegate = self;
@@ -47,7 +48,6 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    
     cell.textLabel.text = [self.roomNumbers[indexPath.row] stringValue];
 
     return cell;
@@ -55,7 +55,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.rooms count];
+    return self.rooms.count;
 }
 
 @end
