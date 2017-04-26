@@ -5,7 +5,7 @@
 //  Created by Cathy Oun on 4/24/17.
 //  Copyright © 2017 cathyoun. All rights reserved.
 //
-
+#import "AutoLayout.h"
 #import "RoomsViewController.h"
 #import "Hotel+CoreDataClass.h"
 #import "Hotel+CoreDataProperties.h"
@@ -25,8 +25,7 @@
 - (void)loadView
 {
     [super loadView];
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    [self.view addSubview:self.tableView];
+    [self setupTableView];
 }
 
 - (void)viewDidLoad
@@ -41,8 +40,16 @@
         [self.roomNumbers addObject: [NSNumber numberWithUnsignedInt:room.number]];
     }
     self.roomNumbers = [[self.roomNumbers sortedArrayUsingSelector:@selector(compare:)] mutableCopy];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
 
+}
+
+- (void)setupTableView
+{
+    self.tableView = [[UITableView alloc] init];
+    [self.view addSubview:self.tableView];
+    [self.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    [AutoLayout fullScreenConstraintWithVFLForView:self.tableView];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

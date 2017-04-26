@@ -48,7 +48,6 @@
     [self.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.view addSubview:self.tableView];
     [AutoLayout fullScreenConstraintWithVFLForView:self.tableView];
-
 }
 
 - (NSArray *)availableRooms
@@ -98,7 +97,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BookViewController *bookVC = [[BookViewController alloc] init];
-    bookVC.currSelectedRoom = self.availableRooms[indexPath.row];
+    bookVC.currSelectedRoom    = self.availableRooms[indexPath.row];
+    bookVC.startDate           = self.startDate;
+    bookVC.endDate             = self.endDate;
     [self.navigationController pushViewController:bookVC animated:YES];
 }
 

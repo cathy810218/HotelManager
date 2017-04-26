@@ -10,19 +10,38 @@
 
 @interface BookViewController ()
 
+@property (strong, nonatomic) UITextField *firstNameTextfield;
+@property (strong, nonatomic) UITextField *lastNameTextfield;
+@property (strong, nonatomic) UITextField *emailTextfield;
+
 @end
 
 @implementation BookViewController
 
-- (void)viewDidLoad {
+- (void)loadView
+{
+    [super loadView];
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self setupTextfields];
+    [self setupLabels];
+}
+
+- (void)setupTextfields
+{
+    
+}
+
+- (void)setupLabels
+{
+    
+}
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 
 @end

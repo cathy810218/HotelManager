@@ -133,10 +133,10 @@
 				6BFCCA7A1EAF1C8900A6C07C /* DatePickerViewController.m */,
 				6BFCCA7C1EAFCF9100A6C07C /* AvailibleRoomsViewController.h */,
 				6BFCCA7D1EAFCF9100A6C07C /* AvailibleRoomsViewController.m */,
-				6BFCCA761EAF1C6600A6C07C /* ReservationViewController.h */,
-				6BFCCA771EAF1C6600A6C07C /* ReservationViewController.m */,
 				6BFCCA7F1EB01D4800A6C07C /* BookViewController.h */,
 				6BFCCA801EB01D4800A6C07C /* BookViewController.m */,
+				6BFCCA761EAF1C6600A6C07C /* ReservationViewController.h */,
+				6BFCCA771EAF1C6600A6C07C /* ReservationViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";

@@ -31,6 +31,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.startDatePicker.date = [NSDate date];
+    NSTimeInterval secondsPerDay = 24 * 60 * 60;
+    self.endDatePicker.date = [[NSDate date] dateByAddingTimeInterval:secondsPerDay];
     [self.startDatePicker addTarget:self
                              action:@selector(pickerChanged:)
                    forControlEvents:UIControlEventValueChanged];
@@ -43,7 +46,7 @@
         self.startDatePicker.date = [NSDate date];
     }
     
-    if ([self.endDatePicker.date timeIntervalSinceReferenceDate] < [self.startDatePicker.date timeIntervalSinceReferenceDate]) {
+    if ([self.endDatePicker.date timeIntervalSinceReferenceDate] <= [self.startDatePicker.date timeIntervalSinceReferenceDate]) {
         // End day is in the past than the start date, then move it to 1 day after the start date
         NSTimeInterval secondsPerDay = 24 * 60 * 60;
         self.endDatePicker.date = [self.startDatePicker.date dateByAddingTimeInterval:secondsPerDay];
@@ -67,10 +70,11 @@
     [AutoLayout leadingConstraintFrom:startDateLabel toView:self.view];
     [AutoLayout trailingConstraintFrom:startDateLabel toView:self.view];
     [AutoLayout height:30 forView:startDateLabel];
-    [AutoLayout offest:0 forThisItemTop:startDateLabel toThatItemBottom:self.topLayoutGuide];
+    [AutoLayout offest:20 forThisItemTop:startDateLabel toThatItemBottom:self.topLayoutGuide];
+    [AutoLayout offest:0 forThisItemBottom:startDateLabel toThatItemTop:self.startDatePicker];
     
     
-    [AutoLayout offest:15 forThisItemBottom:endDateLabel toThatItemTop:self.endDatePicker];
+    [AutoLayout offest:0 forThisItemBottom:endDateLabel toThatItemTop:self.endDatePicker];
     [AutoLayout leadingConstraintFrom:endDateLabel toView:self.view];
     [AutoLayout trailingConstraintFrom:endDateLabel toView:self.view];
     [AutoLayout height:30 forView:endDateLabel];
@@ -91,14 +95,13 @@
     
     [AutoLayout leadingConstraintFrom:self.startDatePicker toView:self.view];
     [AutoLayout trailingConstraintFrom:self.startDatePicker toView:self.view];
-    [AutoLayout offest:15 forThisItemTop:self.startDatePicker toThatItemBottom:self.topLayoutGuide];
 
-    [AutoLayout offest:30 forThisItemTop:self.endDatePicker toThatItemBottom:self.startDatePicker];
+    [AutoLayout offest:40 forThisItemTop:self.endDatePicker toThatItemBottom:self.startDatePicker];
     [AutoLayout equalHeightConstraintFromView:self.endDatePicker toView:self.startDatePicker withMultiplier:1.0];
 
     [AutoLayout leadingConstraintFrom:self.endDatePicker toView:self.view];
     [AutoLayout trailingConstraintFrom:self.endDatePicker toView:self.view];
-    [AutoLayout offest:-15 forThisItemBottom:self.endDatePicker toThatItemBottom:self.view];
+    [AutoLayout offest:-20 forThisItemBottom:self.endDatePicker toThatItemBottom:self.view];
     
 }
 

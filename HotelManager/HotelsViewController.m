@@ -8,7 +8,7 @@
 
 #import "HotelsViewController.h"
 #import "AppDelegate.h" // for doing fetch
-
+#import "AutoLayout.h"
 #import "Hotel+CoreDataProperties.h"
 #import "Hotel+CoreDataClass.h"
 
@@ -26,11 +26,7 @@
 -(void)loadView
 {
     [super loadView];
-    // add table view
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds
-                                                  style:UITableViewStylePlain];
-    [self.view addSubview:self.tableView];
-    
+    [self setupTableView];
 }
 
 - (void)viewDidLoad
@@ -39,10 +35,18 @@
     
     self.tableView.delegate   = self;
     self.tableView.dataSource = self;
-    
+}
+
+- (void)setupTableView
+{
+    self.tableView = [[UITableView alloc] init];
+    [self.view addSubview:self.tableView];
+    [self.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
     // Because we don't have a stroyboard, so we set it's identifier here
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    [AutoLayout fullScreenConstraintWithVFLForView:self.tableView];
 }
+
 
 - (NSArray *)allHotels
 {
