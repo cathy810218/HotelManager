@@ -8,7 +8,7 @@
 
 #import "HotelsViewController.h"
 #import "AppDelegate.h" // for doing fetch
-
+#import "AutoLayout.h"
 #import "Hotel+CoreDataProperties.h"
 #import "Hotel+CoreDataClass.h"
 
@@ -22,30 +22,33 @@
 @end
 
 @implementation HotelsViewController
-{
-    NSArray *_allHotels;
-}
 
 -(void)loadView
 {
     [super loadView];
-    // add table view
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds
-                                                  style:UITableViewStylePlain];
-    [self.view addSubview:self.tableView];
-    
+    self.navigationItem.title = @"Hotels";
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [self setupTableView];
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     self.tableView.delegate   = self;
     self.tableView.dataSource = self;
-    [self allHotels];
-    
+}
+
+- (void)setupTableView
+{
+    self.tableView = [[UITableView alloc] init];
+    [self.view addSubview:self.tableView];
+    [self.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
     // Because we don't have a stroyboard, so we set it's identifier here
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    [AutoLayout fullScreenConstraintWithVFLForView:self.tableView];
 }
+
 
 - (NSArray *)allHotels
 {
@@ -81,12 +84,12 @@
     return [self.allHotels count];
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     RoomsViewController *roomVC = [[RoomsViewController alloc]init];
     roomVC.currSelectedHotel = self.allHotels[indexPath.row];
     
-    [self.navigationController pushViewController:roomVC animated:true];
-    
+    [self.navigationController pushViewController:roomVC animated:YES];
 }
 
 @end

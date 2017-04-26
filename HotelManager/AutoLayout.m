@@ -105,12 +105,12 @@
 + (NSLayoutConstraint *)centerXFrom:(UIView *)view toView:(UIView *)otherView withOffset:(CGFloat)offset
 {
     NSLayoutConstraint *constaint = [NSLayoutConstraint constraintWithItem:view
-                                        attribute:NSLayoutAttributeCenterX
-                                        relatedBy:NSLayoutRelationEqual
-                                           toItem:otherView
-                                        attribute:NSLayoutAttributeCenterX
-                                       multiplier:1.0
-                                         constant:offset];
+                                                                 attribute:NSLayoutAttributeCenterX
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:otherView
+                                                                 attribute:NSLayoutAttributeCenterX
+                                                                multiplier:1.0
+                                                                  constant:offset];
     constaint.active = YES;
     return constaint;
 }
@@ -118,12 +118,12 @@
 + (NSLayoutConstraint *)centerYFrom:(UIView *)view toView:(UIView *)otherView withOffset:(CGFloat)offset
 {
     NSLayoutConstraint *constaint = [NSLayoutConstraint constraintWithItem:view
-                                        attribute:NSLayoutAttributeCenterY
-                                        relatedBy:NSLayoutRelationEqual
-                                           toItem:otherView
-                                        attribute:NSLayoutAttributeCenterY
-                                       multiplier:1.0
-                                         constant:offset];
+                                                                 attribute:NSLayoutAttributeCenterY
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:otherView
+                                                                 attribute:NSLayoutAttributeCenterY
+                                                                multiplier:1.0
+                                                                  constant:offset];
     constaint.active = YES;
     return constaint;
 }
@@ -131,12 +131,12 @@
 + (NSLayoutConstraint *)height:(CGFloat)height forView:(UIView *)view
 {
     NSLayoutConstraint *constaint = [NSLayoutConstraint constraintWithItem:view
-                                        attribute:NSLayoutAttributeHeight
-                                        relatedBy:NSLayoutRelationEqual
-                                           toItem:nil
-                                        attribute:NSLayoutAttributeNotAnAttribute
-                                       multiplier:1.0
-                                         constant:height];
+                                                                 attribute:NSLayoutAttributeHeight
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:nil
+                                                                 attribute:NSLayoutAttributeNotAnAttribute
+                                                                multiplier:1.0
+                                                                  constant:height];
     constaint.active = YES;
     return constaint;
 }
@@ -144,22 +144,22 @@
 + (NSLayoutConstraint *)width:(CGFloat)width forView:(UIView *)view
 {
     NSLayoutConstraint *constaint = [NSLayoutConstraint constraintWithItem:view
-                                        attribute:NSLayoutAttributeWidth
-                                        relatedBy:NSLayoutRelationEqual
-                                           toItem:nil
-                                        attribute:NSLayoutAttributeNotAnAttribute
-                                       multiplier:1.0
-                                         constant:width];
+                                                                 attribute:NSLayoutAttributeWidth
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:nil
+                                                                 attribute:NSLayoutAttributeNotAnAttribute
+                                                                multiplier:1.0
+                                                                  constant:width];
     constaint.active = YES;
     return constaint;
 }
 
-+ (NSLayoutConstraint *)offest:(CGFloat)offest forViewTop:(UIView *)view toViewTop:(UIView *)otherView
++ (NSLayoutConstraint *)offest:(CGFloat)offest forThisItemTop:(id)item toThatItemTop:(id)otherItem
 {
-    NSLayoutConstraint *constaint = [NSLayoutConstraint constraintWithItem:view
+    NSLayoutConstraint *constaint = [NSLayoutConstraint constraintWithItem:item
                                                                  attribute:NSLayoutAttributeTop
                                                                  relatedBy:NSLayoutRelationEqual
-                                                                    toItem:otherView
+                                                                    toItem:otherItem
                                                                  attribute:NSLayoutAttributeTop
                                                                 multiplier:1.0
                                                                   constant:offest];
@@ -167,13 +167,39 @@
     return constaint;
 }
 
-+ (NSLayoutConstraint *)offest:(CGFloat)offest forViewTop:(UIView *)view toViewBottom:(UIView *)otherView
++ (NSLayoutConstraint *)offest:(CGFloat)offest forThisItemTop:(id)item toThatItemBottom:(id)otherItem
 {
-    NSLayoutConstraint *constaint = [NSLayoutConstraint constraintWithItem:view
+    NSLayoutConstraint *constaint = [NSLayoutConstraint constraintWithItem:item
                                                                  attribute:NSLayoutAttributeTop
                                                                  relatedBy:NSLayoutRelationEqual
-                                                                    toItem:otherView
+                                                                    toItem:otherItem
                                                                  attribute:NSLayoutAttributeBottom
+                                                                multiplier:1.0
+                                                                  constant:offest];
+    constaint.active = YES;
+    return constaint;
+}
+
++ (NSLayoutConstraint *)offest:(CGFloat)offest forThisItemBottom:(id)item toThatItemBottom:(id)otherItem
+{
+    NSLayoutConstraint *constaint = [NSLayoutConstraint constraintWithItem:item
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:otherItem
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                multiplier:1.0
+                                                                  constant:offest];
+    constaint.active = YES;
+    return constaint;
+}
+
++ (NSLayoutConstraint *)offest:(CGFloat)offest forThisItemBottom:(id)item toThatItemTop:(id)otherItem
+{
+    NSLayoutConstraint *constaint = [NSLayoutConstraint constraintWithItem:item
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:otherItem
+                                                                 attribute:NSLayoutAttributeTop
                                                                 multiplier:1.0
                                                                   constant:offest];
     constaint.active = YES;
