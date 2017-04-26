@@ -62,4 +62,13 @@
                 forThisItemTop:(id)item
               toThatItemBottom:(id)otherItem;
 
++ (NSLayoutConstraint *)offest:(CGFloat)offest
+             forThisItemBottom:(id)item
+              toThatItemBottom:(id)otherItem;
+
++ (NSLayoutConstraint *)offest:(CGFloat)offest
+             forThisItemBottom:(id)item
+                 toThatItemTop:(id)otherItem;
+
+
 @end

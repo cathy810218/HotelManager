@@ -12,8 +12,8 @@
 
 @interface DatePickerViewController ()
 
-@property (strong, nonatomic) UIDatePicker *startDate;
-@property (strong, nonatomic) UIDatePicker *endDate;
+@property (strong, nonatomic) UIDatePicker *startDatePicker;
+@property (strong, nonatomic) UIDatePicker *endDatePicker;
 
 @end
 
@@ -25,33 +25,81 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self setupDatePicker];
     [self setupDoneButton];
+    [self setupDateLabels];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.startDatePicker addTarget:self
+                             action:@selector(pickerChanged:)
+                   forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)pickerChanged:(UIDatePicker *)sender
+{
+    if ([self.startDatePicker.date timeIntervalSinceReferenceDate] < [[NSDate date] timeIntervalSinceReferenceDate]) {
+        // Start day in the past. Then set it to today's day
+        self.startDatePicker.date = [NSDate date];
+    }
+    
+    if ([self.endDatePicker.date timeIntervalSinceReferenceDate] < [self.startDatePicker.date timeIntervalSinceReferenceDate]) {
+        // End day is in the past than the start date, then move it to 1 day after the start date
+        NSTimeInterval secondsPerDay = 24 * 60 * 60;
+        self.endDatePicker.date = [self.startDatePicker.date dateByAddingTimeInterval:secondsPerDay];
+    }
+}
+
+- (void)setupDateLabels
+{
+    UILabel *startDateLabel = [[UILabel alloc] init];
+    UILabel *endDateLabel = [[UILabel alloc] init];
+    [self.view addSubview:startDateLabel];
+    [self.view addSubview:endDateLabel];
+    [startDateLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [endDateLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    startDateLabel.text = @"Check In";
+    endDateLabel.text = @"Check Out";
+    startDateLabel.textAlignment = NSTextAlignmentCenter;
+    endDateLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [AutoLayout leadingConstraintFrom:startDateLabel toView:self.view];
+    [AutoLayout trailingConstraintFrom:startDateLabel toView:self.view];
+    [AutoLayout height:30 forView:startDateLabel];
+    [AutoLayout offest:0 forThisItemTop:startDateLabel toThatItemBottom:self.topLayoutGuide];
+    
+    
+    [AutoLayout offest:15 forThisItemBottom:endDateLabel toThatItemTop:self.endDatePicker];
+    [AutoLayout leadingConstraintFrom:endDateLabel toView:self.view];
+    [AutoLayout trailingConstraintFrom:endDateLabel toView:self.view];
+    [AutoLayout height:30 forView:endDateLabel];
+
 }
 
 - (void)setupDatePicker
 {
-    self.startDate = [[UIDatePicker alloc] init];
-    self.startDate.datePickerMode = UIDatePickerModeDate;
-    [self.view addSubview:self.startDate];
-    [self.startDate setTranslatesAutoresizingMaskIntoConstraints:NO];
-//    [AutoLayout height:200 forView:self.startDate];
-    [AutoLayout leadingConstraintFrom:self.startDate toView:self.view];
-    [AutoLayout trailingConstraintFrom:self.startDate toView:self.view];
-    [AutoLayout offest:50 forThisItemTop:self.startDate toThatItemBottom:self.topLayoutGuide];
-    [AutoLayout centerYFrom:self.startDate toView:self.view withOffset:-100];
+    self.startDatePicker = [[UIDatePicker alloc] init];
+    self.startDatePicker.datePickerMode = UIDatePickerModeDate;
+    [self.view addSubview:self.startDatePicker];
+    [self.startDatePicker setTranslatesAutoresizingMaskIntoConstraints:NO];
     
-    self.endDate = [[UIDatePicker alloc] init];
-    self.endDate.datePickerMode = UIDatePickerModeDate;
-    [self.view addSubview:self.endDate];
-    [self.endDate setTranslatesAutoresizingMaskIntoConstraints:NO];
-//    [AutoLayout height:200 forView:self.endDate];
-    [AutoLayout leadingConstraintFrom:self.endDate toView:self.view];
-    [AutoLayout trailingConstraintFrom:self.endDate toView:self.view];
-    [AutoLayout centerYFrom:self.endDate toView:self.view withOffset:150];
+    self.endDatePicker = [[UIDatePicker alloc] init];
+    self.endDatePicker.datePickerMode = UIDatePickerModeDate;
+    [self.view addSubview:self.endDatePicker];
+    [self.endDatePicker setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    [AutoLayout leadingConstraintFrom:self.startDatePicker toView:self.view];
+    [AutoLayout trailingConstraintFrom:self.startDatePicker toView:self.view];
+    [AutoLayout offest:15 forThisItemTop:self.startDatePicker toThatItemBottom:self.topLayoutGuide];
+
+    [AutoLayout offest:30 forThisItemTop:self.endDatePicker toThatItemBottom:self.startDatePicker];
+    [AutoLayout equalHeightConstraintFromView:self.endDatePicker toView:self.startDatePicker withMultiplier:1.0];
+
+    [AutoLayout leadingConstraintFrom:self.endDatePicker toView:self.view];
+    [AutoLayout trailingConstraintFrom:self.endDatePicker toView:self.view];
+    [AutoLayout offest:-15 forThisItemBottom:self.endDatePicker toThatItemBottom:self.view];
+    
 }
 
 - (void)setupDoneButton
@@ -62,14 +110,14 @@
 
 - (void)doneButtonPressed:(UIBarButtonItem *)sender
 {
-    NSDate *endDate = self.endDate.date;
+    NSDate *endDate = self.endDatePicker.date;
     if ([[NSDate date] timeIntervalSinceReferenceDate] > [endDate timeIntervalSinceReferenceDate]) {
-        self.endDate.date = [NSDate date];
+        self.endDatePicker.date = [NSDate date];
         return;
     }
     AvailibleRoomsViewController *avaVC = [[AvailibleRoomsViewController alloc] init];
     avaVC.startDate = [NSDate date];
-    avaVC.endDate = [self.endDate date];
+    avaVC.endDate = [self.endDatePicker date];
     [self.navigationController pushViewController:avaVC animated:YES];
 }
 

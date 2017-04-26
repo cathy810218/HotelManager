@@ -179,4 +179,30 @@
     constaint.active = YES;
     return constaint;
 }
+
++ (NSLayoutConstraint *)offest:(CGFloat)offest forThisItemBottom:(id)item toThatItemBottom:(id)otherItem
+{
+    NSLayoutConstraint *constaint = [NSLayoutConstraint constraintWithItem:item
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:otherItem
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                multiplier:1.0
+                                                                  constant:offest];
+    constaint.active = YES;
+    return constaint;
+}
+
++ (NSLayoutConstraint *)offest:(CGFloat)offest forThisItemBottom:(id)item toThatItemTop:(id)otherItem
+{
+    NSLayoutConstraint *constaint = [NSLayoutConstraint constraintWithItem:item
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:otherItem
+                                                                 attribute:NSLayoutAttributeTop
+                                                                multiplier:1.0
+                                                                  constant:offest];
+    constaint.active = YES;
+    return constaint;
+}
 @end
