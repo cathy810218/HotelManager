@@ -28,7 +28,10 @@
     [super loadView];
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"Hotel Manager";
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:nil
+                                                                            action:nil];
     [self setupButtons];
 }
 
@@ -48,7 +51,6 @@
     browseButton.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.5 alpha:1];
     bookButton.backgroundColor = [UIColor redColor];
     lookupButton.backgroundColor = [UIColor grayColor];
-    
     
     [browseButton addTarget:self
                      action:@selector(browseButtonPressed)

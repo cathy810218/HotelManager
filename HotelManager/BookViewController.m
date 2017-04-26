@@ -48,8 +48,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(dismissKeyboard)];
+
+    [self.view addGestureRecognizer:tap];
 }
 
+-(void)dismissKeyboard
+{
+    [self.firstNameTextfield resignFirstResponder];
+    [self.lastNameTextfield resignFirstResponder];
+    [self.emailTextfield resignFirstResponder];
+
+}
 
 - (void)reserveButtonPressed:(UIBarButtonItem *)sender
 {
@@ -72,13 +83,13 @@
     NSError *saveError;
     BOOL result = [appDelegate.persistentContainer.viewContext save:&saveError];
     if (!result) {
-        NSLog(@" %@",saveError.localizedDescription);
+        NSLog(@"%@",saveError.localizedDescription);
     }
     
     if (!saveError) {
         [self showAlertControllerWithSuccee:@"Success!" withMessage:@"Your reservation has been confirmed!"];
     } else {
-        [self showAlertControllerWithSuccee:@"Fail..." withMessage:@"Something went wrong! We were not able to reserve your room"];
+        [self showAlertControllerWithSuccee:@"Fail..." withMessage:@"Something went wrong! We were not able to reserve your room."];
     }
 }
 
@@ -181,5 +192,6 @@
 }
 
 
+// TODO: Regex to check user input
 
 @end
