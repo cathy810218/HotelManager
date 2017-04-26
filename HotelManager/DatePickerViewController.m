@@ -23,6 +23,11 @@
 {
     [super loadView];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationItem.title = @"Select Dates";
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:nil
+                                                                            action:nil];
     [self setupDatePicker];
     [self setupDoneButton];
     [self setupDateLabels];
@@ -35,6 +40,9 @@
     NSTimeInterval secondsPerDay = 24 * 60 * 60;
     self.endDatePicker.date = [[NSDate date] dateByAddingTimeInterval:secondsPerDay];
     [self.startDatePicker addTarget:self
+                             action:@selector(pickerChanged:)
+                   forControlEvents:UIControlEventValueChanged];
+    [self.endDatePicker addTarget:self
                              action:@selector(pickerChanged:)
                    forControlEvents:UIControlEventValueChanged];
 }

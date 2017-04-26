@@ -27,6 +27,8 @@
 {
     [super loadView];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationItem.title = @"Hotel Manager";
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     [self setupButtons];
 }
 

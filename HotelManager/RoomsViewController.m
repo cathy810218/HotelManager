@@ -25,6 +25,7 @@
 - (void)loadView
 {
     [super loadView];
+    self.navigationItem.title = @"Rooms";
     [self setupTableView];
 }
 
