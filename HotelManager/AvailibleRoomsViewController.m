@@ -14,12 +14,6 @@
 #import "Room+CoreDataProperties.h"
 #import "Room+CoreDataClass.h"
 
-#import "Reservation+CoreDataClass.h"
-#import "Reservation+CoreDataProperties.h"
-
-#import "Hotel+CoreDataClass.h"
-#import "Hotel+CoreDataProperties.h"
-
 @interface AvailibleRoomsViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) UITableView *tableView;
@@ -61,23 +55,8 @@
 - (NSFetchedResultsController *)availableRooms
 {
     if (!_availableRooms) {
-        
-        
-//        CoreDataStack *cdStack = [CoreDataStack shared];
-//        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"startDate <= %@ AND endDate >= %@", self.endDate, self.startDate];
-//        
-//        NSArray *reservations = [cdStack fetchFromCoreDataWithEntityName:@"Reservation" withPredicate:predicate];
-//     
-//        NSMutableArray *unavailiableRooms = [NSMutableArray new];
-//        for (Reservation *reservation in reservations) {
-//            [unavailiableRooms addObject:reservation];
-//        }
-//        NSPredicate *roomPredicate = [NSPredicate predicateWithFormat:@"NOT self IN %@", unavailiableRooms];
-//        
-//        NSSortDescriptor *roomSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"hotel.name" ascending:YES];
-//        NSSortDescriptor *roomNumberSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"number" ascending:YES];
-//        _availableRooms = [cdStack fetchFromCoreDataWithEntityName:@"Room" withPredicate:roomPredicate withDescriptors:@[roomSortDescriptor, roomNumberSortDescriptor] fetchWithSectionNameKeyPath:@"hotel.name"];
-        _availableRooms = [HotelService getAllAvailableRoomWithStartDate:self.startDate andEndDate:self.endDate];
+        _availableRooms = [HotelService getAllAvailableRoomWithStartDate:self.startDate
+                                                              andEndDate:self.endDate];
     }
     return _availableRooms;
 }

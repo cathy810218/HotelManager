@@ -18,7 +18,6 @@
 @property (strong, nonatomic) UIButton *bookButton;
 @property (strong, nonatomic) UIButton *lookupButton;
 
-
 @end
 
 @implementation MainViewController
@@ -44,29 +43,39 @@
 
 - (void)setupButtons
 {
-    UIButton *browseButton = [self createButtonWithTitle:@"Browse"];
-    UIButton *bookButton   = [self createButtonWithTitle:@"Book"];
-    UIButton *lookupButton = [self createButtonWithTitle:@"Look up"];
+    self.browseButton = ({
+        UIButton *b = [self createButtonWithTitle:@"Browse"];
+        [b addTarget:self
+              action:@selector(browseButtonPressed)
+    forControlEvents:UIControlEventTouchUpInside];
+        [b setImage:[UIImage imageNamed:@"hotel"]
+           forState:UIControlStateNormal];
+        [b.imageView setContentMode:UIViewContentModeScaleAspectFill];
+        b;
+    });
     
-    browseButton.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.5 alpha:1];
-    bookButton.backgroundColor = [UIColor redColor];
-    lookupButton.backgroundColor = [UIColor grayColor];
     
-    [browseButton addTarget:self
-                     action:@selector(browseButtonPressed)
-           forControlEvents:UIControlEventTouchUpInside];
+    self.bookButton = ({
+        UIButton *b = [self createButtonWithTitle:@"Book"];
+        [b addTarget:self
+              action:@selector(bookButtonPressed)
+    forControlEvents:UIControlEventTouchUpInside];
+        [b setImage:[UIImage imageNamed:@"room"]
+           forState:UIControlStateNormal];
+        [b.imageView setContentMode:UIViewContentModeScaleAspectFill];
+        b;
+    });
     
-    [bookButton addTarget:self
-                   action:@selector(bookButtonPressed)
-         forControlEvents:UIControlEventTouchUpInside];
-    
-    [lookupButton addTarget:self
-                     action:@selector(lookupButtonPressed)
-           forControlEvents:UIControlEventTouchUpInside];
-    
-    self.browseButton = browseButton;
-    self.bookButton = bookButton;
-    self.lookupButton = lookupButton;
+    self.lookupButton = ({
+        UIButton *b = [self createButtonWithTitle:@"Look up"];
+        [b addTarget:self
+              action:@selector(lookupButtonPressed)
+    forControlEvents:UIControlEventTouchUpInside];
+        [b setImage:[UIImage imageNamed:@"food"]
+           forState:UIControlStateNormal];
+        [b.imageView setContentMode:UIViewContentModeScaleAspectFill];
+        b;
+    });
     
     [self updateButtonLayout];
 }
@@ -95,12 +104,38 @@
     [AutoLayout offest:0.0 forThisItemTop:self.lookupButton toThatItemBottom:self.bookButton];
     
     [AutoLayout bottomConstraintFrom:self.lookupButton toView:self.view];
+    
+    [self addContentViewForButton:self.browseButton];
+    [self addContentViewForButton:self.bookButton];
+    [self addContentViewForButton:self.lookupButton];
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+- (void)addContentViewForButton:(UIButton *)btn
 {
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    [self.view setNeedsUpdateConstraints];
+    UIView *dimView = [[UIView alloc] init];
+    [btn addSubview:dimView];
+    [dimView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [AutoLayout topConstraintFrom:dimView toView:btn];
+    [AutoLayout bottomConstraintFrom:dimView toView:btn];
+    [AutoLayout leadingConstraintFrom:dimView toView:btn];
+    [AutoLayout trailingConstraintFrom:dimView toView:btn];
+    dimView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
+    dimView.userInteractionEnabled = NO;
+    
+    UILabel *titleLabel = [[UILabel alloc] init];
+    [btn addSubview:titleLabel];
+    [titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [AutoLayout bottomConstraintFrom:titleLabel toView:btn];
+    [AutoLayout leadingConstraintFrom:titleLabel toView:btn];
+    [AutoLayout trailingConstraintFrom:titleLabel toView:btn];
+    [AutoLayout height:50 forView:titleLabel];
+    titleLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+    titleLabel.text = btn.titleLabel.text;
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    titleLabel.font = [UIFont fontWithName:@"Zapfino" size:18];
+    
 }
 
 - (void)browseButtonPressed
@@ -123,7 +158,7 @@
 
 - (UIButton *)createButtonWithTitle:(NSString *)title
 {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [button setTranslatesAutoresizingMaskIntoConstraints:NO];

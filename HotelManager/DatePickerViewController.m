@@ -10,6 +10,7 @@
 #import "AutoLayout.h"
 #import "AvailibleRoomsViewController.h"
 
+static const NSTimeInterval kSecondsPerDay = 24 * 60 * 60;
 @interface DatePickerViewController ()
 
 @property (strong, nonatomic) UIDatePicker *startDatePicker;
@@ -36,15 +37,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.startDatePicker.date = [NSDate date];
-    NSTimeInterval secondsPerDay = 24 * 60 * 60;
-    self.endDatePicker.date = [[NSDate date] dateByAddingTimeInterval:secondsPerDay];
-    [self.startDatePicker addTarget:self
-                             action:@selector(pickerChanged:)
-                   forControlEvents:UIControlEventValueChanged];
-    [self.endDatePicker addTarget:self
-                             action:@selector(pickerChanged:)
-                   forControlEvents:UIControlEventValueChanged];
+
 }
 
 - (void)pickerChanged:(UIDatePicker *)sender
@@ -56,8 +49,8 @@
     
     if ([self.endDatePicker.date timeIntervalSinceReferenceDate] <= [self.startDatePicker.date timeIntervalSinceReferenceDate]) {
         // End day is in the past than the start date, then move it to 1 day after the start date
-        NSTimeInterval secondsPerDay = 24 * 60 * 60;
-        self.endDatePicker.date = [self.startDatePicker.date dateByAddingTimeInterval:secondsPerDay];
+        self.endDatePicker.date = [self.startDatePicker.date
+                                   dateByAddingTimeInterval:kSecondsPerDay];
     }
 }
 
@@ -87,6 +80,14 @@
     [AutoLayout trailingConstraintFrom:endDateLabel toView:self.view];
     [AutoLayout height:30 forView:endDateLabel];
 
+    self.startDatePicker.date = [NSDate date];
+    self.endDatePicker.date = [[NSDate date] dateByAddingTimeInterval:kSecondsPerDay];
+    [self.startDatePicker addTarget:self
+                             action:@selector(pickerChanged:)
+                   forControlEvents:UIControlEventValueChanged];
+    [self.endDatePicker addTarget:self
+                           action:@selector(pickerChanged:)
+                 forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)setupDatePicker

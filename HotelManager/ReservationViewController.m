@@ -25,8 +25,8 @@
 
 @property (strong, nonatomic) NSArray *allReservations;
 @property (strong, nonatomic) NSMutableArray *filteredReservation;
-@property (strong, nonatomic) ReservationCell *reservationCell;
 @property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) ReservationCell *reservationCell;
 
 @end
 
@@ -86,8 +86,12 @@
 
 #pragma mark - UISearchBarDelegate
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    self.filteredReservation = [[NSMutableArray alloc]init];
-    self.filteredReservation = [[self.allReservations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"guest.lastName CONTAINS[c] %@ OR guest.firstName CONTAINS[c] %@ OR guest.email CONTAINS[c] %@", searchBar.text, searchBar.text, searchBar.text]] mutableCopy];
+    if ([searchText isEqualToString:@""]) {
+        self.filteredReservation = nil;
+    } else {
+        self.filteredReservation = [[NSMutableArray alloc]init];
+        self.filteredReservation = [[self.allReservations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"guest.lastName CONTAINS[c] %@ OR guest.firstName CONTAINS[c] %@ OR guest.email CONTAINS[c] %@", searchBar.text, searchBar.text, searchBar.text]] mutableCopy];
+    }
     [self.tableView reloadData];
 }
 
@@ -127,12 +131,8 @@
     } else {
         reservation = self.filteredReservation[indexPath.row];
     }
-    
-    if (reservationCell == nil) {
-        reservationCell = [[ReservationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    }
-    reservationCell.reservation = reservation;
 
+    reservationCell.reservation = reservation;
     return reservationCell;
 }
 

@@ -16,7 +16,6 @@
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSArray *rooms;
-@property (strong, nonatomic) NSMutableArray *roomNumbers;
 
 @end
 
@@ -35,13 +34,8 @@
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.roomNumbers = [[NSMutableArray alloc] init];
-    self.rooms = [[self.currSelectedHotel rooms] allObjects];
-    for (Room *room in self.rooms) {
-        [self.roomNumbers addObject: [NSNumber numberWithUnsignedInt:room.number]];
-    }
-    self.roomNumbers = [[self.roomNumbers sortedArrayUsingSelector:@selector(compare:)] mutableCopy];
-
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"number" ascending:YES];
+    self.rooms = [[[self.currSelectedHotel rooms] allObjects] sortedArrayUsingDescriptors:@[sortDescriptor]];
 }
 
 - (void)setupTableView
@@ -56,7 +50,8 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    cell.textLabel.text = [self.roomNumbers[indexPath.row] stringValue];
+    Room *room = self.rooms[indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"%i", room.number];
 
     return cell;
 }

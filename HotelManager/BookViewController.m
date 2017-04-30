@@ -59,14 +59,10 @@
     [self.firstNameTextfield resignFirstResponder];
     [self.lastNameTextfield resignFirstResponder];
     [self.emailTextfield resignFirstResponder];
-    
 }
 
 - (void)reserveButtonPressed:(UIBarButtonItem *)sender
 {
-    // save
-    
-    
     [HotelService saveReservationWithFirstName:self.firstNameTextfield.text
                                       lastName:self.lastNameTextfield.text
                                          email:self.emailTextfield.text
@@ -104,45 +100,59 @@
 
 - (void)setupTextfields
 {
-    UITextField *first = [[UITextField alloc] init];
-    UITextField *last =  [[UITextField alloc] init];
-    UITextField *email = [[UITextField alloc] init];
+    self.firstNameTextfield = ({
+        UITextField *t = [[UITextField alloc] init];
+        [self.view addSubview:t];
+        [t setTranslatesAutoresizingMaskIntoConstraints:NO];
+        t.placeholder = @"First Name";
+        t.borderStyle = UITextBorderStyleRoundedRect;
+        t;
+    });
     
-    [self.view addSubview:first];
-    [self.view addSubview:last];
-    [self.view addSubview:email];
+    self.lastNameTextfield = ({
+        UITextField *t = [[UITextField alloc] init];
+        [self.view addSubview:t];
+        [t setTranslatesAutoresizingMaskIntoConstraints:NO];
+        t.placeholder = @"Last Name";
+        t.borderStyle = UITextBorderStyleRoundedRect;
+        t;
+    });
+    self.emailTextfield = ({
+        UITextField *t = [[UITextField alloc] init];
+        [self.view addSubview:t];
+        [t setTranslatesAutoresizingMaskIntoConstraints:NO];
+        t.placeholder = @"Email";
+        t.borderStyle = UITextBorderStyleRoundedRect;
+        t;
+    });
+
+    [AutoLayout centerYFrom:self.emailTextfield
+                     toView:self.view withOffset:0];
+    [AutoLayout offest:-30
+     forThisItemBottom:self.lastNameTextfield
+         toThatItemTop:self.emailTextfield];
     
-    [first setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [last setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [email setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [AutoLayout offest:-30
+     forThisItemBottom:self.firstNameTextfield
+         toThatItemTop:self.lastNameTextfield];
     
-    first.placeholder = @"First Name";
-    last.placeholder = @"Last Name";
-    email.placeholder = @"Email";
+    [AutoLayout height:30 forView:self.firstNameTextfield];
+    [AutoLayout height:30 forView:self.lastNameTextfield];
+    [AutoLayout height:30 forView:self.emailTextfield];
     
-    first.borderStyle = UITextBorderStyleRoundedRect;
-    last.borderStyle = UITextBorderStyleRoundedRect;
-    email.borderStyle = UITextBorderStyleRoundedRect;
+    [AutoLayout centerXFrom:self.firstNameTextfield
+                     toView:self.view
+                 withOffset:0];
+    [AutoLayout centerXFrom:self.lastNameTextfield
+                     toView:self.view
+                 withOffset:0];
+    [AutoLayout centerXFrom:self.emailTextfield
+                     toView:self.view
+                 withOffset:0];
     
-    [AutoLayout centerYFrom:email toView:self.view withOffset:0];
-    [AutoLayout offest:-30 forThisItemBottom:last toThatItemTop:email];
-    [AutoLayout offest:-30 forThisItemBottom:first toThatItemTop:last];
-    
-    [AutoLayout height:30 forView:first];
-    [AutoLayout height:30 forView:last];
-    [AutoLayout height:30 forView:email];
-    
-    [AutoLayout centerXFrom:first toView:self.view withOffset:0];
-    [AutoLayout centerXFrom:last toView:self.view withOffset:0];
-    [AutoLayout centerXFrom:email toView:self.view withOffset:0];
-    
-    [AutoLayout width:120 forView:first];
-    [AutoLayout width:120 forView:last];
-    [AutoLayout width:120 forView:email];
-    
-    self.firstNameTextfield = first;
-    self.lastNameTextfield = last;
-    self.emailTextfield = email;
+    [AutoLayout width:120 forView:self.firstNameTextfield];
+    [AutoLayout width:120 forView:self.lastNameTextfield];
+    [AutoLayout width:120 forView:self.emailTextfield];
 }
 
 - (void)setupLabels
@@ -150,36 +160,31 @@
     UILabel *roomLabel = [[UILabel alloc] init];
     [self.view addSubview:roomLabel];
     [roomLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
-    roomLabel.text = [NSString stringWithFormat:@"Hotel:    %@ - Room: %i",self.currSelectedRoom.hotel.name, self.currSelectedRoom.number];
-    
+    roomLabel.text = [NSString stringWithFormat:@"Hotel:    %@ - Room: %i", self.currSelectedRoom.hotel.name, self.currSelectedRoom.number];
     [AutoLayout height:30 forView:roomLabel];
     [AutoLayout centerXFrom:roomLabel toView:self.view withOffset:0];
     [AutoLayout centerYFrom:roomLabel toView:self.view withOffset:100];
-    
-    UILabel *checkInLabel = [[UILabel alloc] init];
-    UILabel *checkOutLabel = [[UILabel alloc] init];
-    
-    [self.view addSubview:checkInLabel];
-    [self.view addSubview:checkOutLabel];
-    
-    [checkInLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [checkOutLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
     [dateFormat setDateFormat:@"MM/dd/yyyy"];
     
+    UILabel *checkInLabel = [[UILabel alloc] init];
+    [self.view addSubview:checkInLabel];
+    [checkInLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     checkInLabel.text = [NSString stringWithFormat:@"Check in:   %@", [dateFormat stringFromDate:self.startDate]];
-    checkOutLabel.text = [NSString stringWithFormat:@"Check out:   %@", [dateFormat stringFromDate:self.endDate]];
-    
     [AutoLayout offest:20 forThisItemTop:checkInLabel toThatItemBottom:roomLabel];
-    [AutoLayout offest:20 forThisItemTop:checkOutLabel toThatItemBottom:checkInLabel];
     [AutoLayout centerXFrom:checkInLabel toView:self.view withOffset:0];
-    [AutoLayout centerXFrom:checkOutLabel toView:self.view withOffset:0];
-    
     [AutoLayout height:30 forView:checkInLabel];
-    [AutoLayout height:30 forView:checkOutLabel];
+
     
+    UILabel *checkOutLabel = [[UILabel alloc] init];
+    [self.view addSubview:checkOutLabel];
+    [checkOutLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    checkOutLabel.text = [NSString stringWithFormat:@"Check out:   %@", [dateFormat stringFromDate:self.endDate]];
+    [AutoLayout offest:20 forThisItemTop:checkOutLabel toThatItemBottom:checkInLabel];
+    [AutoLayout centerXFrom:checkOutLabel toView:self.view withOffset:0];
+    [AutoLayout height:30 forView:checkOutLabel];
 }
 
 

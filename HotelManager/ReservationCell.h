@@ -10,7 +10,5 @@
 #import "Reservation+CoreDataClass.h"
 
 @interface ReservationCell : UITableViewCell
-
 @property (strong, nonatomic) Reservation *reservation;
-
 @end
