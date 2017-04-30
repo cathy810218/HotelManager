@@ -26,20 +26,20 @@
 
 @implementation ReservationCell
 
-//-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-//{
-//    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-//        _nameLabel = [[UILabel alloc] init];
-//        [self addSubview:_nameLabel];
-//        
-//        _hotelLabel = [[UILabel alloc] init];
-//        [self addSubview:_hotelLabel];
-//        
-//        _roomLabel = [[UILabel alloc] init];
-//        [self addSubview:self.roomLabel];
-//    }
-//    return self;
-//}
+-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        _nameLabel = [[UILabel alloc] init];
+        [self addSubview:_nameLabel];
+        
+        _hotelLabel = [[UILabel alloc] init];
+        [self addSubview:_hotelLabel];
+        
+        _roomLabel = [[UILabel alloc] init];
+        [self addSubview:self.roomLabel];
+    }
+    return self;
+}
 
 - (void)setReservation:(Reservation *)reservation
 {
@@ -53,25 +53,6 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    _nameLabel = [[UILabel alloc] init];
-    [self addSubview:_nameLabel];
-    
-    _hotelLabel = [[UILabel alloc] init];
-    [self addSubview:_hotelLabel];
-    
-    _roomLabel = [[UILabel alloc] init];
-    [self addSubview:self.roomLabel];
-    
-    
-    _nameLabel = [[UILabel alloc] init];
-    [self addSubview:_nameLabel];
-    
-    _hotelLabel = [[UILabel alloc] init];
-    [self addSubview:_hotelLabel];
-    
-    _roomLabel = [[UILabel alloc] init];
-    [self addSubview:self.roomLabel];
-    
     [_nameLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     [AutoLayout offest:8 forThisItemTop:self.nameLabel toThatItemTop:self];
     [AutoLayout offest:8 forThisItemLeading:self.nameLabel toThatItemLeading:self];
@@ -94,9 +75,9 @@
 
 - (void)prepareForReuse
 {
-    self.nameLabel = nil;
-    self.hotelLabel = nil;
-    self.roomLabel = nil;
+    self.nameLabel.text = @"";
+    self.hotelLabel.text = @"";
+    self.roomLabel.text = @"";
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
