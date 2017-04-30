@@ -16,7 +16,7 @@
 #import "Guest+CoreDataProperties.h"
 #import "Room+CoreDataProperties.h"
 #import "Room+CoreDataClass.h"
-#import "AppDelegate.h"
+#import "CoreDataStack.h"
 #import "ReservationCell.h"
 
 @interface ReservationViewController () <UITableViewDataSource, UISearchBarDelegate>
@@ -51,20 +51,7 @@
 - (NSArray *)allReservations
 {
     if (!_allReservations) {
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        NSManagedObjectContext *context = appDelegate.persistentContainer.viewContext;
-        
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Reservation"];
-        
-        NSError *fetchError;
-        NSArray *reservations = [context executeFetchRequest:request error:&fetchError];
-        
-        if (fetchError) {
-            NSLog(@"There is an error fetching from core data");
-        } else {
-            NSLog(@"Fetch succeed!");
-        }
-        _allReservations = reservations;
+        _allReservations = [[CoreDataStack shared] fetchFromCoreDataWithEntityName:@"Reservation"];
     }
     return _allReservations;
 }
