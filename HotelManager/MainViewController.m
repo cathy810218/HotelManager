@@ -18,7 +18,6 @@
 @property (strong, nonatomic) UIButton *bookButton;
 @property (strong, nonatomic) UIButton *lookupButton;
 
-
 @end
 
 @implementation MainViewController
@@ -95,12 +94,6 @@
     [AutoLayout offest:0.0 forThisItemTop:self.lookupButton toThatItemBottom:self.bookButton];
     
     [AutoLayout bottomConstraintFrom:self.lookupButton toView:self.view];
-}
-
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-{
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    [self.view setNeedsUpdateConstraints];
 }
 
 - (void)browseButtonPressed

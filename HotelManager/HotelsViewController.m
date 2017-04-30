@@ -47,8 +47,8 @@
     self.tableView = [[UITableView alloc] init];
     [self.view addSubview:self.tableView];
     [self.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    // Because we don't have a stroyboard, so we set it's identifier here
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    [self.tableView registerClass:[UITableViewCell class]
+           forCellReuseIdentifier:@"cell"];
     [AutoLayout fullScreenConstraintWithVFLForView:self.tableView];
 }
 
@@ -57,19 +57,6 @@
 {
     if (!_allHotels) {
         NSArray *result = [[CoreDataStack shared] fetchFromCoreDataWithEntityName:@"Hotel"];
-//        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//        NSManagedObjectContext *context = appDelegate.persistentContainer.viewContext;
-//        
-//        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Hotel"];
-//        
-//        NSError *fetchError;
-//        NSArray *hotels = [context executeFetchRequest:request error:&fetchError];
-//        
-//        if (fetchError) {
-//            NSLog(@"There is an error fetching from core data");
-//        } else {
-//            NSLog(@"Fetch succeed!");
-//        }
         _allHotels = result;
     }
     return _allHotels;
