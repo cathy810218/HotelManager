@@ -25,7 +25,7 @@
 
 @property (strong, nonatomic) NSArray *allReservations;
 @property (strong, nonatomic) NSMutableArray *filteredReservation;
-
+@property (strong, nonatomic) ReservationCell *reservationCell;
 @property (strong, nonatomic) UITableView *tableView;
 
 @end
@@ -85,10 +85,11 @@
 - (void)setupTableView
 {
     self.tableView = [[UITableView alloc] init];
+    self.tableView.separatorInset = UIEdgeInsetsZero;
     [self.tableView registerClass:[ReservationCell class] forCellReuseIdentifier:@"cell"];
     [self.tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.tableView setEstimatedRowHeight:100];
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.rowHeight = 100;
     [self.view addSubview:self.tableView];
     [AutoLayout leadingConstraintFrom:self.tableView toView:self.view];
     [AutoLayout trailingConstraintFrom:self.tableView toView:self.view];
@@ -131,23 +132,27 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ReservationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    
+    ReservationCell *reservationCell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+
     Reservation *reservation;
     if (self.filteredReservation == nil) {
         reservation = self.allReservations[indexPath.row];
     } else {
         reservation = self.filteredReservation[indexPath.row];
     }
-    cell.reservation = reservation;
-//    Guest *guest = [reservation guest];
-
-//    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", guest.firstName, guest.lastName];
-//    cell.detailTextLabel.text = [NSString stringWithFormat:@"Hotel: %@. Room: %i", [[reservation room] hotel].name, [reservation room].number];
     
-    return cell;
+    if (reservationCell == nil) {
+        reservationCell = [[ReservationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
+    reservationCell.reservation = reservation;
+
+    return reservationCell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
+}
 
 @end
 

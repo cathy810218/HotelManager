@@ -26,41 +26,70 @@
 
 @implementation ReservationCell
 
+//-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+//{
+//    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+//        _nameLabel = [[UILabel alloc] init];
+//        [self addSubview:_nameLabel];
+//        
+//        _hotelLabel = [[UILabel alloc] init];
+//        [self addSubview:_hotelLabel];
+//        
+//        _roomLabel = [[UILabel alloc] init];
+//        [self addSubview:self.roomLabel];
+//    }
+//    return self;
+//}
+
 - (void)setReservation:(Reservation *)reservation
 {
-    
     _reservation = reservation;
+    [self layoutSubviews];
+    self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", [self.reservation guest].firstName, [self.reservation guest].lastName];
+    self.hotelLabel.text =[NSString stringWithFormat:@"Hotel: %@",[[self.reservation room] hotel].name];
+    self.roomLabel.text = [NSString stringWithFormat:@"Room: %i",[self.reservation room].number];
+}
+
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    _nameLabel = [[UILabel alloc] init];
+    [self addSubview:_nameLabel];
+    
+    _hotelLabel = [[UILabel alloc] init];
+    [self addSubview:_hotelLabel];
+    
+    _roomLabel = [[UILabel alloc] init];
+    [self addSubview:self.roomLabel];
+    
     
     _nameLabel = [[UILabel alloc] init];
     [self addSubview:_nameLabel];
+    
+    _hotelLabel = [[UILabel alloc] init];
+    [self addSubview:_hotelLabel];
+    
+    _roomLabel = [[UILabel alloc] init];
+    [self addSubview:self.roomLabel];
+    
     [_nameLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     [AutoLayout offest:8 forThisItemTop:self.nameLabel toThatItemTop:self];
     [AutoLayout offest:8 forThisItemLeading:self.nameLabel toThatItemLeading:self];
     [AutoLayout offest:8 forThisItemTrailing:self.nameLabel toThatItemTrailing:self];
-    [AutoLayout height:20 forView:self.nameLabel];
     
-    _hotelLabel = [[UILabel alloc] init];
-    [self addSubview:_hotelLabel];
     [self.hotelLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     [AutoLayout offest:8 forThisItemTop:self.hotelLabel toThatItemBottom:self.nameLabel];
     [AutoLayout offest:8 forThisItemLeading:self.hotelLabel toThatItemLeading:self];
     [AutoLayout offest:8 forThisItemTrailing:self.hotelLabel toThatItemTrailing:self];
-    [AutoLayout height:20 forView:self.hotelLabel];
     
-    
-    self.roomLabel = [[UILabel alloc] init];
-    [self addSubview:self.roomLabel];
     [self.roomLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     [AutoLayout offest:8 forThisItemTop:self.roomLabel toThatItemBottom:self.hotelLabel];
     [AutoLayout offest:8 forThisItemLeading:self.roomLabel toThatItemLeading:self];
     [AutoLayout offest:8 forThisItemTrailing:self.roomLabel toThatItemTrailing:self];
     [AutoLayout height:20 forView:self.roomLabel];
-    [AutoLayout offest:-8 forThisItemBottom:self.roomLabel toThatItemBottom:self];
-    
-    
-    self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", [self.reservation guest].firstName, [self.reservation guest].lastName];
-    self.hotelLabel.text =[NSString stringWithFormat:@"Hotel: %@",[[self.reservation room] hotel].name];
-    self.roomLabel.text = [NSString stringWithFormat:@"Room: %i",[self.reservation room].number];
+
+    [AutoLayout equalHeightConstraintFromView:_nameLabel toView:_hotelLabel withMultiplier:1];
+    [AutoLayout equalHeightConstraintFromView:_roomLabel toView:_hotelLabel withMultiplier:1];
 }
 
 - (void)prepareForReuse
