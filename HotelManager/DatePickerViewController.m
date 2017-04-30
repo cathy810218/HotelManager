@@ -37,14 +37,7 @@ static const NSTimeInterval kSecondsPerDay = 24 * 60 * 60;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.startDatePicker.date = [NSDate date];
-    self.endDatePicker.date = [[NSDate date] dateByAddingTimeInterval:kSecondsPerDay];
-    [self.startDatePicker addTarget:self
-                             action:@selector(pickerChanged:)
-                   forControlEvents:UIControlEventValueChanged];
-    [self.endDatePicker addTarget:self
-                             action:@selector(pickerChanged:)
-                   forControlEvents:UIControlEventValueChanged];
+
 }
 
 - (void)pickerChanged:(UIDatePicker *)sender
@@ -87,6 +80,14 @@ static const NSTimeInterval kSecondsPerDay = 24 * 60 * 60;
     [AutoLayout trailingConstraintFrom:endDateLabel toView:self.view];
     [AutoLayout height:30 forView:endDateLabel];
 
+    self.startDatePicker.date = [NSDate date];
+    self.endDatePicker.date = [[NSDate date] dateByAddingTimeInterval:kSecondsPerDay];
+    [self.startDatePicker addTarget:self
+                             action:@selector(pickerChanged:)
+                   forControlEvents:UIControlEventValueChanged];
+    [self.endDatePicker addTarget:self
+                           action:@selector(pickerChanged:)
+                 forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)setupDatePicker
