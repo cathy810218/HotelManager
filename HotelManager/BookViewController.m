@@ -8,7 +8,7 @@
 
 #import "BookViewController.h"
 #import "AutoLayout.h"
-#import "AppDelegate.h"
+#import "HotelService.h"
 #import "MainViewController.h"
 
 #import "Hotel+CoreDataProperties.h"
@@ -50,7 +50,7 @@
     [super viewDidLoad];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                           action:@selector(dismissKeyboard)];
-
+    
     [self.view addGestureRecognizer:tap];
 }
 
@@ -59,38 +59,29 @@
     [self.firstNameTextfield resignFirstResponder];
     [self.lastNameTextfield resignFirstResponder];
     [self.emailTextfield resignFirstResponder];
-
+    
 }
 
 - (void)reserveButtonPressed:(UIBarButtonItem *)sender
 {
     // save
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    Reservation *reservation = [NSEntityDescription insertNewObjectForEntityForName:@"Reservation" inManagedObjectContext:appDelegate.persistentContainer.viewContext];
-    
-    Guest *guest = [NSEntityDescription insertNewObjectForEntityForName:@"Guest" inManagedObjectContext:appDelegate.persistentContainer.viewContext];
-    
-    guest.lastName = self.lastNameTextfield.text;
-    guest.firstName = self.firstNameTextfield.text;
-    guest.email = self.emailTextfield.text;
-    reservation.guest = guest;
-    
-    reservation.startDate = self.startDate;
-    reservation.endDate = self.endDate;
-    reservation.room = self.currSelectedRoom;
     
     
-    NSError *saveError;
-    BOOL result = [appDelegate.persistentContainer.viewContext save:&saveError];
-    if (!result) {
-        NSLog(@"%@",saveError.localizedDescription);
-    }
-    
-    if (!saveError) {
-        [self showAlertControllerWithSuccee:@"Success!" withMessage:@"Your reservation has been confirmed!"];
-    } else {
-        [self showAlertControllerWithSuccee:@"Fail..." withMessage:@"Something went wrong! We were not able to reserve your room."];
-    }
+    [HotelService saveReservationWithFirstName:self.firstNameTextfield.text
+                                      lastName:self.lastNameTextfield.text
+                                         email:self.emailTextfield.text
+                                          room:self.currSelectedRoom
+                                     startDate:self.startDate
+                                    andEndDate:self.endDate
+                         withCompletionHandler:^(BOOL succeed) {
+        if (succeed) {
+            [self showAlertControllerWithSuccee:@"Success!"
+                                    withMessage:@"Your reservation has been confirmed!"];
+        } else {
+            [self showAlertControllerWithSuccee:@"Fail..."
+                                    withMessage:@"Something went wrong! We were not able to reserve your room."];
+        }
+    }];
 }
 
 - (void)showAlertControllerWithSuccee:(NSString *)title withMessage:(NSString *)message
@@ -134,8 +125,8 @@
     email.borderStyle = UITextBorderStyleRoundedRect;
     
     [AutoLayout centerYFrom:email toView:self.view withOffset:0];
-    [AutoLayout offest:-30 forThisItemBottom:first toThatItemTop:email];
-    [AutoLayout offest:-30 forThisItemBottom:last toThatItemTop:first];
+    [AutoLayout offest:-30 forThisItemBottom:last toThatItemTop:email];
+    [AutoLayout offest:-30 forThisItemBottom:first toThatItemTop:last];
     
     [AutoLayout height:30 forView:first];
     [AutoLayout height:30 forView:last];

@@ -35,10 +35,10 @@
                                         toView:(UIView *)otherView;
 
 + (NSLayoutConstraint *)topConstraintFrom:(UIView *)view
-                                       toView:(UIView *)otherView;
+                                   toView:(UIView *)otherView;
 
 + (NSLayoutConstraint *)bottomConstraintFrom:(UIView *)view
-                                        toView:(UIView *)otherView;
+                                      toView:(UIView *)otherView;
 
 + (NSLayoutConstraint *)height:(CGFloat)height
                        forView:(UIView *)view;
@@ -69,6 +69,22 @@
 + (NSLayoutConstraint *)offest:(CGFloat)offest
              forThisItemBottom:(id)item
                  toThatItemTop:(id)otherItem;
+
++ (NSLayoutConstraint *)offest:(CGFloat)offest
+            forThisItemLeading:(id)item
+             toThatItemLeading:(id)otherItem;
+
++ (NSLayoutConstraint *)offest:(CGFloat)offest
+            forThisItemLeading:(id)item
+            toThatItemTrailing:(id)otherItem;
+
++ (NSLayoutConstraint *)offest:(CGFloat)offest
+           forThisItemTrailing:(id)item
+            toThatItemTrailing:(id)otherItem;
+
++ (NSLayoutConstraint *)offest:(CGFloat)offest
+           forThisItemTrailing:(id)item
+             toThatItemLeading:(id)otherItem;
 
 
 @end

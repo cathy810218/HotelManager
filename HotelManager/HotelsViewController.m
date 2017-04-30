@@ -7,7 +7,7 @@
 //
 
 #import "HotelsViewController.h"
-#import "AppDelegate.h" // for doing fetch
+#import "CoreDataStack.h"
 #import "AutoLayout.h"
 #import "Hotel+CoreDataProperties.h"
 #import "Hotel+CoreDataClass.h"
@@ -56,20 +56,21 @@
 - (NSArray *)allHotels
 {
     if (!_allHotels) {
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        NSManagedObjectContext *context = appDelegate.persistentContainer.viewContext;
-        
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Hotel"];
-        
-        NSError *fetchError;
-        NSArray *hotels = [context executeFetchRequest:request error:&fetchError];
-        
-        if (fetchError) {
-            NSLog(@"There is an error fetching from core data");
-        } else {
-            NSLog(@"Fetch succeed!");
-        }
-        _allHotels = hotels;
+        NSArray *result = [[CoreDataStack shared] fetchFromCoreDataWithEntityName:@"Hotel"];
+//        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//        NSManagedObjectContext *context = appDelegate.persistentContainer.viewContext;
+//        
+//        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Hotel"];
+//        
+//        NSError *fetchError;
+//        NSArray *hotels = [context executeFetchRequest:request error:&fetchError];
+//        
+//        if (fetchError) {
+//            NSLog(@"There is an error fetching from core data");
+//        } else {
+//            NSLog(@"Fetch succeed!");
+//        }
+        _allHotels = result;
     }
     return _allHotels;
 }
