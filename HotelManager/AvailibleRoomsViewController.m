@@ -112,7 +112,6 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     Room *room = [self.availableRooms objectAtIndexPath:indexPath];
-//    Room *room = rooms[indexPath.row];
     cell.textLabel.text = [[NSNumber numberWithInteger:room.number] stringValue];
     return cell;
 }

@@ -134,8 +134,8 @@
     email.borderStyle = UITextBorderStyleRoundedRect;
     
     [AutoLayout centerYFrom:email toView:self.view withOffset:0];
-    [AutoLayout offest:-30 forThisItemBottom:first toThatItemTop:email];
-    [AutoLayout offest:-30 forThisItemBottom:last toThatItemTop:first];
+    [AutoLayout offest:-30 forThisItemBottom:last toThatItemTop:email];
+    [AutoLayout offest:-30 forThisItemBottom:first toThatItemTop:last];
     
     [AutoLayout height:30 forView:first];
     [AutoLayout height:30 forView:last];
